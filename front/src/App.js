@@ -62,8 +62,11 @@ class App extends Component {
     fetch("/api/getPlayerByName/" + firstName + " " + lastName)
       .then(res => res.json())
       .then(data => {
-        console.log("got one! data from search   " + data);
+        console.log("got one! data from search   " + data.length);
         this.myInputText.value = "";
+        this.setState({
+          players: []
+        });
         this.setState({
           players: data
         });
@@ -82,6 +85,14 @@ class App extends Component {
       });
   }
 
+  handleChange(event) {
+    console.log("select queery is :   " + event.target.value);
+    let sortBy = event.target.value;
+    //this.setState({ value: event.target.value });
+    //alert("Your favorite flavor is: " + this.state.value);
+    this.searchByName(sortBy, " ");
+  }
+
   render() {
     console.log("Rendering");
 
@@ -93,7 +104,7 @@ class App extends Component {
           <br />
           <div className="row d-flex justify-content-around">
             <form
-              className="form-inline"
+              className="form-inline form-group border rounded"
               onSubmit={this.validateName.bind(this)}
             >
               <div>
@@ -121,11 +132,15 @@ class App extends Component {
                   Sort by:{" "}
                 </label>
               </div>
-              <select className="custom-select form-check form-check-inline">
-                <option value="mostvotes">Name</option>
+              <select
+                className="custom-select form-check form-check-inline"
+                onChange={this.handleChange.bind(this)}
+              >
+                <option value="name">Name</option>
                 <option value="mostvotes">Most Votes</option>
                 <option value="leastvotes">Least Votes</option>
                 <option value="pos">Position</option>
+                <option value="age">Age</option>
               </select>
             </div>
           </div>

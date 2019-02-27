@@ -24,7 +24,7 @@ export default class Comment extends Component {
     fetch("/api/getPlayer/" + this.props.comment.personId)
       .then(res => res.json())
       .then(data => {
-        //console.log("got one! data   " + data);
+        console.log("player Vote is    " + data[0].votes);
         this.setState({
           votes: data[0].votes
         });

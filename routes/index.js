@@ -80,12 +80,12 @@ function getOneByFullName(first, last, callback) {
   });
 }
 
-function getTopTen(callback) {
+function getTopTen(num, querry, callback) {
   connect(function(comments, client) {
     comments
       .find()
-      .sort({ votes: -1 })
-      .limit(10)
+      .sort(querry)
+      .limit(num)
       .toArray(function(err, docs) {
         if (err !== null) throw err;
         console.log("got " + docs.length + " comments");
@@ -155,26 +155,53 @@ router.get("/getPlayer/:personId", function(req, res, next) {
 
 router.get("/getPlayerByName/:name", function(req, res, next) {
   let fullName = req.params.name.trim();
-  let nameArr = fullName.split(" ");
-  let name1 = nameArr[0];
-  name1 = name1.charAt(0).toUpperCase() + name1.slice(1);
-  //console.log("get one id" + req.params.firstName);
-  if (nameArr.length === 1) {
-    getOneByName(name1, function(docs) {
+
+  if (fullName === "mostvotes") {
+    let sortQuerry = { votes: -1 };
+    getTopTen(100, sortQuerry, function(docs) {
+      res.send(docs);
+    });
+  } else if (fullName === "leastvotes") {
+    let sortQuerry = { votes: 1 };
+    getTopTen(100, sortQuerry, function(docs) {
+      res.send(docs);
+    });
+  } else if (fullName === "pos") {
+    let sortQuerry = { pos: 1 };
+    getTopTen(100, sortQuerry, function(docs) {
+      res.send(docs);
+    });
+  } else if (fullName === "name") {
+    getComments(function(docs) {
+      res.send(docs);
+    });
+  } else if (fullName === "age") {
+    let sortQuerry = { dateOfBirthUTC: 1 };
+    getTopTen(100, sortQuerry, function(docs) {
       res.send(docs);
     });
   } else {
-    let name2 = nameArr[1];
-    name2 = name2.charAt(0).toUpperCase() + name2.slice(1);
-    getOneByFullName(name1, name2, function(docs) {
-      res.send(docs);
-    });
+    let nameArr = fullName.split(" ");
+    let name1 = nameArr[0];
+    name1 = name1.charAt(0).toUpperCase() + name1.slice(1);
+    //console.log("get one id" + req.params.firstName);
+    if (nameArr.length === 1) {
+      getOneByName(name1, function(docs) {
+        res.send(docs);
+      });
+    } else {
+      let name2 = nameArr[1];
+      name2 = name2.charAt(0).toUpperCase() + name2.slice(1);
+      getOneByFullName(name1, name2, function(docs) {
+        res.send(docs);
+      });
+    }
   }
 });
 
 router.get("/topten", function(req, res, next) {
   console.log("top ten!!!!");
-  getTopTen(function(docs) {
+  getTopTen(10, { votes: -1 }, function(docs) {
     res.send(docs);
   });
 });
