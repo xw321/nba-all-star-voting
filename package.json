@@ -2,9 +2,6 @@
   "name": "livenodeexpressreactmongo",
   "version": "0.0.0",
   "private": true,
-  "scripts": {
-    "start": "node ./bin/www"
-  },
   "dependencies": {
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
@@ -16,5 +13,13 @@
   },
   "devDependencies": {
     "prettier": "^1.16.4"
+  },
+  "scripts": {
+    "heroku-postbuild": "cd front && yarn install && yarn build",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "10.15.0",
+    "yarn": "1.13.0"
   }
 }
