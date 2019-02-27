@@ -85,10 +85,10 @@ export default class Comment extends Component {
     let teamFile = require("./team.json");
     let myTeamId = this.props.comment.teamId;
     let i = 0;
-    while (teamFile[i].teamId.toString() != myTeamId) {
+    while (teamFile[i].teamId.toString() !== myTeamId) {
       i++;
     }
-    if (i != teamFile.length) {
+    if (i !== teamFile.length) {
       return teamFile[i].teamName;
     }
     return "no such team";
@@ -97,7 +97,7 @@ export default class Comment extends Component {
     return (
       <div className="Comment col-3 bg-light border rounded border-dark m-3 p-3">
         <span className="font-weight-bold">{this.props.comment.firstName}</span>
-        &nbsp;&nbsp;
+        &nbsp;
         <span className="font-weight-bold">{this.props.comment.lastName}</span>
         <br />
         <span>Position: {this.props.comment.pos}</span>
@@ -118,7 +118,9 @@ export default class Comment extends Component {
           </span>
         </button>
         &nbsp;&nbsp;
-        <span>{this.state.votes}</span>
+        <span className="font-weight-bold text-primary">
+          {this.state.votes}
+        </span>
       </div>
     );
   }

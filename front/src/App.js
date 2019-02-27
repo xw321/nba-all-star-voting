@@ -9,59 +9,76 @@ import MainTemplate from "./MainTemplate.js";
 class App extends Component {
   constructor(props) {
     super(props);
-
     this.myInputText = null;
-
     this.state = {
-      comments: []
+      players: [],
+      message: ""
     };
   }
 
   componentDidMount() {
     this.reloadData();
+    console.log("After loading players length : " + this.state.players.length);
   }
 
   reloadData() {
     fetch("/api/getMessages")
       .then(res => res.json())
       .then(data => {
-        console.log("got data!", data);
+        console.log("initial load page");
         this.setState({
-          comments: data
+          players: data
         });
       });
   }
 
-  renderComments() {
-    return this.state.comments.map((c, i) => <Comment key={i++} comment={c} />);
+  renderPlayers() {
+    console.log("rendering players");
+    return this.state.players.map((c, i) => <Comment key={i++} comment={c} />);
   }
 
-  onCreateComment(event) {
+  validateName(event) {
     event.preventDefault();
-
-    if (!this.myInputText) {
-      console.log("inText not set not inserting");
-      return;
+    let name = this.myInputText.value.toString().toLocaleLowerCase();
+    name = name.trim();
+    let pattern = /^[a-zA-Z\s]+$/;
+    if (!name.match(pattern)) {
+      alert("Invald name");
+    } else {
+      name = name.replace(/\s+/g, " ");
+      console.log(name);
+      let nameArr = name.split(" ");
+      if (nameArr.length === 1) {
+        // only one name filed, querry DB using that as both firstname and lastname
+        this.searchByName(nameArr[0], " ");
+      } else {
+        // querry db using the first and last in arr
+        this.searchByName(nameArr[0], nameArr[nameArr.length - 1]);
+      }
     }
+  }
 
-    // Post
-    console.log("Send the post");
-    fetch("/api/createMessage", {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ text: this.myInputText.value })
-    })
-      .then(response => response.json())
-      .then(result => {
-        console.log("Inserted the data!!", result);
-
-        //clearing the input
+  searchByName(firstName, lastName) {
+    fetch("/api/getPlayerByName/" + firstName + " " + lastName)
+      .then(res => res.json())
+      .then(data => {
+        console.log("got one! data from search   " + data);
         this.myInputText.value = "";
-        // Redraw
-        console.log("Reload data");
-        this.reloadData();
+        this.setState({
+          players: data
+        });
+        if (data === undefined || data.length === 0) {
+          this.setState({
+            message: "No player match your criteria"
+          });
+        } else {
+          this.setState({
+            message: ""
+          });
+        }
+        console.log(
+          "After QUERRY players length : " + this.state.players.length
+        );
       });
   }
 
@@ -72,63 +89,62 @@ class App extends Component {
       <MainTemplate>
         <div className="App">
           <h1 className="d-flex justify-content-around">Vote!</h1>
-
-          <form className="form-inline">
-            <div>
-              <label htmlFor="inAuthor">
-                {" "}
-                <input
-                  id="inAuthor"
-                  type="text"
-                  name="author"
-                  placeholder="Search name here"
-                />
-                {/* Remember to add the ref */}
-              </label>
-            </div>
-
-            <button
-              className="bg-secondary text-light border rounded"
-              type="submit"
-              value="Submit"
-            >
-              Search{" "}
-            </button>
-          </form>
-
+          <br />
+          <br />
           <div className="row d-flex justify-content-around">
-            {this.renderComments()}
+            <form
+              className="form-inline"
+              onSubmit={this.validateName.bind(this)}
+            >
+              <div>
+                <label htmlFor="inAuthor">
+                  {" "}
+                  <input
+                    id="inName"
+                    type="text"
+                    name="name"
+                    placeholder="Search name here"
+                    ref={input => (this.myInputText = input)}
+                  />
+                </label>
+              </div>
+              <input
+                className="btn btn-secondary bg-secondary text-light border rounded"
+                type="submit"
+                value="Search"
+              />
+            </form>
+
+            <div className="col-4 input-group mb-3">
+              <div className="input-group-prepend form-check form-check-inline">
+                <label className="input-group-text form-check form-check-inline">
+                  Sort by:{" "}
+                </label>
+              </div>
+              <select className="custom-select form-check form-check-inline">
+                <option value="mostvotes">Name</option>
+                <option value="mostvotes">Most Votes</option>
+                <option value="leastvotes">Least Votes</option>
+                <option value="pos">Position</option>
+              </select>
+            </div>
+          </div>
+
+          <br />
+          <br />
+          <div className="row d-flex justify-content-around">
+            {this.renderPlayers()}
+          </div>
+          <br />
+          <div>
+            <h3 className="d-flex justify-content-around text-danger">
+              {this.state.message}
+            </h3>
           </div>
         </div>
       </MainTemplate>
     );
   }
 }
-
-// <h2>Create a new comment</h2>
-// <form onSubmit={this.onCreateComment.bind(this)}>
-//   <div>
-//     <label htmlFor="inAuthor">
-//       {" "}
-//       Author
-//       <input id="inAuthor" type="text" name="author" />
-//       {/* Remember to add the ref */}
-//     </label>
-//   </div>
-//   <div>
-//     <label htmlFor="inComment">
-//       {" "}
-//       Comment:
-//       <input
-//         id="inComment"
-//         type="text"
-//         name="text"
-//         ref={input => (this.myInputText = input)}
-//       />
-//     </label>
-//   </div>
-
-//   <input type="submit" value="Submit" />
-// </form>
 
 export default App;

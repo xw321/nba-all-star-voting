@@ -49,6 +49,37 @@ function getOne(c, callback) {
   });
 }
 
+function getOneByName(c, callback) {
+  connect(function(comments, client) {
+    comments
+      .find({
+        $or: [{ firstName: c }, { lastName: c }]
+      })
+      .toArray(function(err, docs) {
+        if (err !== null) throw err;
+        //console.log("got " + docs.length + " comments");
+        callback(docs);
+        client.close();
+      });
+  });
+}
+
+function getOneByFullName(first, last, callback) {
+  connect(function(comments, client) {
+    comments
+      .find({
+        firstName: first,
+        lastName: last
+      })
+      .toArray(function(err, docs) {
+        if (err !== null) throw err;
+        //console.log("got " + docs.length + " comments");
+        callback(docs);
+        client.close();
+      });
+  });
+}
+
 function getTopTen(callback) {
   connect(function(comments, client) {
     comments
@@ -120,6 +151,25 @@ router.get("/getPlayer/:personId", function(req, res, next) {
   getOne(req.params.personId, function(docs) {
     res.send(docs);
   });
+});
+
+router.get("/getPlayerByName/:name", function(req, res, next) {
+  let fullName = req.params.name.trim();
+  let nameArr = fullName.split(" ");
+  let name1 = nameArr[0];
+  name1 = name1.charAt(0).toUpperCase() + name1.slice(1);
+  //console.log("get one id" + req.params.firstName);
+  if (nameArr.length === 1) {
+    getOneByName(name1, function(docs) {
+      res.send(docs);
+    });
+  } else {
+    let name2 = nameArr[1];
+    name2 = name2.charAt(0).toUpperCase() + name2.slice(1);
+    getOneByFullName(name1, name2, function(docs) {
+      res.send(docs);
+    });
+  }
 });
 
 router.get("/topten", function(req, res, next) {

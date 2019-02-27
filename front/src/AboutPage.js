@@ -10,7 +10,7 @@ export default class AboutPage extends Component {
     super(props);
 
     this.state = {
-      comments: []
+      players: []
     };
   }
 
@@ -24,13 +24,13 @@ export default class AboutPage extends Component {
       .then(data => {
         console.log("got data Ten!", data);
         this.setState({
-          comments: data
+          players: data
         });
       });
   }
 
-  renderComments() {
-    return this.state.comments.map((c, i) => <Comment key={i++} comment={c} />);
+  renderPlayers() {
+    return this.state.players.map((c, i) => <Comment key={i++} comment={c} />);
   }
 
   render() {
@@ -41,7 +41,7 @@ export default class AboutPage extends Component {
         <div className="App">
           <h1 className="d-flex justify-content-around">Top Ten!</h1>
           <div className="row d-flex justify-content-around">
-            {this.renderComments()}
+            {this.renderPlayers()}
           </div>
         </div>
       </MainTemplate>
