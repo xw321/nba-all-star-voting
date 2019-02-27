@@ -5,8 +5,8 @@ export default class MenuBar extends Component {
   render() {
     return (
       <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <NavLink className="navbar-brand" to="/">
+        <nav className="navbar navbar-expand-lg navbar-light bg-info">
+          <NavLink className="navbar-brand text-light" to="/">
             Home
           </NavLink>
           <button
@@ -25,21 +25,21 @@ export default class MenuBar extends Component {
             <ul className="navbar-nav mr-auto">
               <li className="nav-item">
                 <NavLink
-                  className="nav-link"
+                  className="nav-link text-light"
                   activeClassName="active"
                   exact={true}
                   to="/vote"
                 >
-                  Voting{" "}
+                  Voting
                 </NavLink>
               </li>
               <li className="nav-item">
                 <NavLink
-                  className="nav-link"
+                  className="nav-link text-light"
                   activeClassName="active"
                   to="/topten"
                 >
-                  Top Ten Players
+                  Top Players
                 </NavLink>
               </li>
             </ul>

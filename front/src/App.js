@@ -71,8 +71,34 @@ class App extends Component {
     return (
       <MainTemplate>
         <div className="App">
-          <h1>Vote!</h1>
-          <div className="row">{this.renderComments()}</div>
+          <h1 className="d-flex justify-content-around">Vote!</h1>
+
+          <form className="form-inline">
+            <div>
+              <label htmlFor="inAuthor">
+                {" "}
+                <input
+                  id="inAuthor"
+                  type="text"
+                  name="author"
+                  placeholder="Search name here"
+                />
+                {/* Remember to add the ref */}
+              </label>
+            </div>
+
+            <button
+              className="bg-secondary text-light border rounded"
+              type="submit"
+              value="Submit"
+            >
+              Search{" "}
+            </button>
+          </form>
+
+          <div className="row d-flex justify-content-around">
+            {this.renderComments()}
+          </div>
         </div>
       </MainTemplate>
     );

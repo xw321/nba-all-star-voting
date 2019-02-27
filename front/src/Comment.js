@@ -7,8 +7,11 @@ export default class Comment extends Component {
 
     this.onClick = this.onClick.bind(this);
     this.downClick = this.downClick.bind(this);
+    this.getAge = this.getAge.bind(this);
     this.state = {
-      votes: this.props.comment.votes
+      votes: this.props.comment.votes,
+      age: this.getAge(),
+      teamName: this.getTeam()
     };
   }
 
@@ -66,6 +69,30 @@ export default class Comment extends Component {
       });
   }
 
+  getAge() {
+    let birthday = new Date(this.props.comment.dateOfBirthUTC);
+    let today = new Date();
+    let age = today.getFullYear() - birthday.getFullYear();
+    let m = today.getMonth() - birthday.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthday.getDate())) {
+      age--;
+    }
+    let ageStr = age.toString();
+    return ageStr;
+  }
+
+  getTeam() {
+    let teamFile = require("./team.json");
+    let myTeamId = this.props.comment.teamId;
+    let i = 0;
+    while (teamFile[i].teamId.toString() != myTeamId) {
+      i++;
+    }
+    if (i != teamFile.length) {
+      return teamFile[i].teamName;
+    }
+    return "no such team";
+  }
   render() {
     return (
       <div className="Comment col-3 bg-light border rounded border-dark m-3 p-3">
@@ -75,7 +102,9 @@ export default class Comment extends Component {
         <br />
         <span>Position: {this.props.comment.pos}</span>
         &nbsp;&nbsp;
-        <span>Team: {this.props.comment.teamId}</span>
+        <span>Age: {this.state.age}</span>
+        <br />
+        <span>Team: {this.state.teamName}</span>
         <br />
         <button className="btn btn-info" onClick={this.onClick}>
           <span role="img" aria-label="upvote for this player">

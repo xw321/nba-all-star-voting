@@ -8,7 +8,7 @@ export default class MainTemplate extends Component {
       <div>
         <MenuBar />
 
-        <h1>NBA All Star Voting</h1>
+        <h1 className="d-flex justify-content-around">NBA All Star Voting</h1>
         <div>Content goes here:</div>
 
         {this.props.children}
