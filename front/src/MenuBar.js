@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-
+import "./main.css";
 export default class MenuBar extends Component {
   render() {
     return (
-      <div>
+      <div className="back col-12">
         <nav className="navbar navbar-expand-lg navbar-light bg-info">
           <NavLink className="navbar-brand text-light" to="/">
             Home
@@ -30,7 +30,7 @@ export default class MenuBar extends Component {
                   exact={true}
                   to="/vote"
                 >
-                  Voting
+                  Vote Now
                 </NavLink>
               </li>
               <li className="nav-item">

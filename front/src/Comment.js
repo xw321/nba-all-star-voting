@@ -95,32 +95,32 @@ export default class Comment extends Component {
   }
   render() {
     return (
-      <div className="Comment col-3 bg-light border rounded border-dark m-3 p-3">
-        <span className="font-weight-bold">{this.props.comment.firstName}</span>
-        &nbsp;
+      <div className="Comment col-3 bg-white">
+        <span className="font-weight-bold">👤 {this.props.comment.firstName}</span>
+        &nbsp;&nbsp;
         <span className="font-weight-bold">{this.props.comment.lastName}</span>
         <br />
+        <span>Age: {this.state.age}</span>
+        <br/>
         <span>Position: {this.props.comment.pos}</span>
         &nbsp;&nbsp;
-        <span>Age: {this.state.age}</span>
+        
         <br />
         <span>Team: {this.state.teamName}</span>
         <br />
         <button className="btn btn-info" onClick={this.onClick}>
           <span role="img" aria-label="upvote for this player">
-            👍
+            ✔
           </span>
         </button>
         &nbsp;&nbsp;
         <button className="btn btn-info" onClick={this.downClick}>
           <span role="img" aria-label="Downvote for this player">
-            👎
+            ✖
           </span>
         </button>
         &nbsp;&nbsp;
-        <span className="font-weight-bold text-primary">
-          {this.state.votes}
-        </span>
+        <span># of votes: {this.state.votes}</span>
       </div>
     );
   }
