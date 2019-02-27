@@ -9,8 +9,6 @@ export default class AboutPage extends Component {
   constructor(props) {
     super(props);
 
-    this.myInputText = null;
-
     this.state = {
       comments: []
     };

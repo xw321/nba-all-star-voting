@@ -33,6 +33,22 @@ function getComments(callback) {
   });
 }
 
+// querry database to get given player data.
+// send back in a JSON array (only one data)
+function getOne(c, callback) {
+  connect(function(comments, client) {
+    comments
+      .find({ personId: c })
+      .limit(1)
+      .toArray(function(err, docs) {
+        if (err !== null) throw err;
+        //console.log("got " + docs.length + " comments");
+        callback(docs);
+        client.close();
+      });
+  });
+}
+
 function getTopTen(callback) {
   connect(function(comments, client) {
     comments
@@ -48,33 +64,60 @@ function getTopTen(callback) {
   });
 }
 
-// function createComment(c, callback) {
-//   connect(function(comments, client) {
-//     comments.insertOne(c, function(err, result) {
-//       if (err !== null) throw err;
+// querry database to increnment given player votes
+function upVote(c, callback) {
+  console.log("player ID   " + c);
+  connect(function(comments, client) {
+    comments.updateOne({ personId: c }, { $inc: { votes: 1 } });
+    comments.find({ personId: c }).toArray(function(err, docs) {
+      if (err !== null) throw err;
+      //console.log("upvoted >>>>>>> " + docs);
+      callback(docs);
+      client.close();
+    });
+  });
+}
 
-//       console.log("Inserted!!!");
+// querry database to decrement given player votes
+function downVote(c, callback) {
+  console.log("player ID   " + c);
+  connect(function(comments, client) {
+    comments.updateOne({ personId: c }, { $inc: { votes: -1 } });
+    comments.find({ personId: c }).toArray(function(err, docs) {
+      if (err !== null) throw err;
+      //console.log("upvoted >>>>>>> " + docs);
+      callback(docs);
+      client.close();
+    });
+  });
+}
 
-//       callback(result);
-//     });
-//   });
-// }
+router.post("/upvote", function(req, res, next) {
+  console.log(req.body);
+  upVote(req.body.personId, function(result) {
+    console.log("upvoted from call back" + result);
+    res.send(result);
+  });
+});
 
-// router.post("/createMessage", function(req, res, next) {
-//   createComment(
-//     {
-//       text: req.body.text
-//     },
-//     function(result) {
-//       console.log("Inserted, sending result");
-//       res.send(result);
-//     }
-//   );
-// });
+router.post("/downvote", function(req, res, next) {
+  console.log(req.body);
+  downVote(req.body.personId, function(result) {
+    console.log("downvote from call back" + result);
+    res.send(result);
+  });
+});
 
 router.get("/getMessages", function(req, res, next) {
   console.log("getMessages!!!!");
   getComments(function(docs) {
+    res.send(docs);
+  });
+});
+
+router.get("/getPlayer/:personId", function(req, res, next) {
+  console.log("get one id" + req.params.personId);
+  getOne(req.params.personId, function(docs) {
     res.send(docs);
   });
 });
