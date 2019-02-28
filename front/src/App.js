@@ -33,7 +33,6 @@ class App extends Component {
   }
 
   renderPlayers() {
-    console.log("rendering players");
     return this.state.players.map((c, i) => <Comment key={i++} comment={c} />);
   }
 

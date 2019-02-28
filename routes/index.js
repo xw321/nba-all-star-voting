@@ -22,7 +22,10 @@ var router = express.Router();
 function connect(callback) {
   var MongoClient = require("mongodb").MongoClient;
 
-  var dbURL = process.env.MONGODB_URI || require("./loginDetails.js");
+  var dbURL =
+    process.env.MONGODB_URI ||
+    require("./loginDetails.js") ||
+    "mongodb://localhost:27017";
   var client = new MongoClient(dbURL);
   client.connect(function(err) {
     if (err !== null) throw err;
