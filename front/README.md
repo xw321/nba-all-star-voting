@@ -8,7 +8,7 @@ This front-end project was bootstrapped with [Create React App](https://github.c
 ```yarn start```
 
 
-# Content
+## Content
 
 All source files reside in src folder.
 
