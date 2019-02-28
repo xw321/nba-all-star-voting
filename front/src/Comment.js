@@ -96,15 +96,20 @@ export default class Comment extends Component {
   render() {
     return (
       <div className="Comment col-3 bg-white">
-        <span className="font-weight-bold">👤 {this.props.comment.firstName}</span>
+        <span
+          role="img"
+          aria-label="player thumbnail"
+          className="font-weight-bold"
+        >
+          👤 {this.props.comment.firstName}
+        </span>
         &nbsp;&nbsp;
         <span className="font-weight-bold">{this.props.comment.lastName}</span>
         <br />
         <span>Age: {this.state.age}</span>
-        <br/>
+        <br />
         <span>Position: {this.props.comment.pos}</span>
         &nbsp;&nbsp;
-        
         <br />
         <span>Team: {this.state.teamName}</span>
         <br />

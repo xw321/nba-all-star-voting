@@ -5,7 +5,7 @@ export default class MenuBar extends Component {
   render() {
     return (
       <div className="back col-12">
-        <nav className="navbar navbar-expand-lg navbar-light bg-info">
+        <nav className="navbar navbar-expand-lg navbar-light bg-dark">
           <NavLink className="navbar-brand text-light" to="/">
             Home
           </NavLink>
