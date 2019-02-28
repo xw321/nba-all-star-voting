@@ -4,6 +4,11 @@
 Project 2 for Web Development course(CS5610) in Northeastern University, Silicon Valley (Spring 2019 semester). You can find the couse web page [here](http://johnguerra.co/classes/webDevelopment_spring_2019/ "CS-5610 Web Development Spring 2019").
 
 
+
+
+This project is made by [Xun Wang](https://xw321.github.io/) and [Yan Zhao](https://yzhao430.github.io/), with :heart:.
+
+
 ## Demo
 
 You can also play around it using the [deployed verion](https://pure-hollows-48420.herokuapp.com/) on Heroku.
@@ -19,20 +24,47 @@ You can also play around it using the [deployed verion](https://pure-hollows-484
 ## Description
 
 
-A very simple MERN(Mongo, Express, React, Node) App that mimics NBA All-star voting.
+A very simple MERN(Mongo, Express, React, Node) App that mimics NBA All-star voting. 
+
+Why made a new one when NBA already did that? That's becasue the NBA all-star voting is so rigged, fans' votes were ignored, Luka got snubbed, D.Rose got robbed, and the veteran Vince Carter was disrespected. 
+
+
+Plus, this app can view vote number and vote number update upon user update. This NBA-themed project can be expanded to other usage as well, as long as the key features are the same.
+
+
+
+
+
+## Features
+
+
 
 User can use this app to upvote/downte a player, and search for a player by name, or sort players by votes, name, postion, and age.
 
-All vote update and querry results would display in real-time.
+Users can also go to the `top players` tab in the menu bar to directly see who is on top now.
+
+All vote update and querry results would display in real-time upon user updates.
 
 The backend is in the ```routes``` folder, and the frontend that lays on the [```front```](./front) folder
+
+
+
+
 
 ## Requires
 
 Node
+
+
 Express
+
+
 npm
+
+
 yarn
+
+
 Mongo (it defaults to a local Mongo server running on 27017 without auth)
 
 ## Usage
