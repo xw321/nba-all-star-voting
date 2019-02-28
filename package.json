@@ -16,7 +16,7 @@
   },
   "scripts": {
     "heroku-postbuild": "cd front && yarn install && yarn build",
-    "start": "node server.js"
+    "start": "node app.js"
   },
   "engines": {
     "node": "10.15.0",
