@@ -6,6 +6,10 @@ Project 2 for Web Development course(CS5610) in Northeastern University, Silicon
 
 ## Demo
 
+You can also play around it using the [deployed verion](https://pure-hollows-48420.herokuapp.com/) on Heroku.
+
+
+
 ![](https://raw.githubusercontent.com/xw321/nba-all-star-voting/master/demo.gif)
 
 
