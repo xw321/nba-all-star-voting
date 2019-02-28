@@ -1,19 +1,33 @@
 var express = require("express");
 var router = express.Router();
 
+// function connect(callback) {
+//   var MongoClient = require("mongodb").MongoClient;
+
+//   var url = "mongodb://localhost:27017";
+
+//   var client = new MongoClient(url);
+
+//   client.connect(function(err) {
+//     if (err !== null) throw err;
+
+//     var db = client.db("nba_all_star");
+//     var comments = db.collection("players");
+
+//     console.log("Connected!");
+//     callback(comments, client);
+//   });
+// }
+
 function connect(callback) {
   var MongoClient = require("mongodb").MongoClient;
 
-  var url = "mongodb://localhost:27017";
-
-  var client = new MongoClient(url);
-
+  var dbURL = process.env.MONGODB_URI || require("./loginDetails.js");
+  var client = new MongoClient(dbURL);
   client.connect(function(err) {
     if (err !== null) throw err;
-
-    var db = client.db("nba_all_star");
-    var comments = db.collection("players");
-
+    var db = client.db("dbComments");
+    var comments = db.collection("comments");
     console.log("Connected!");
     callback(comments, client);
   });
