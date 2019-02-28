@@ -26,21 +26,21 @@ function connect(callback) {
   var client = new MongoClient(dbURL);
   client.connect(function(err) {
     if (err !== null) throw err;
-    var db = client.db("dbComments");
-    var comments = db.collection("comments");
+    var db = client.db("nba_all_star");
+    var players = db.collection("players");
     console.log("Connected!");
-    callback(comments, client);
+    callback(players, client);
   });
 }
 
 function getComments(callback) {
-  connect(function(comments, client) {
-    comments
+  connect(function(players, client) {
+    players
       .find({})
       .limit(100)
       .toArray(function(err, docs) {
         if (err !== null) throw err;
-        console.log("got " + docs.length + " comments");
+        console.log("got " + docs.length + " players");
         callback(docs);
         client.close();
       });
@@ -50,13 +50,13 @@ function getComments(callback) {
 // querry database to get given player data.
 // send back in a JSON array (only one data)
 function getOne(c, callback) {
-  connect(function(comments, client) {
-    comments
+  connect(function(players, client) {
+    players
       .find({ personId: c })
       .limit(1)
       .toArray(function(err, docs) {
         if (err !== null) throw err;
-        //console.log("got " + docs.length + " comments");
+        //console.log("got " + docs.length + " players");
         callback(docs);
         client.close();
       });
@@ -64,14 +64,14 @@ function getOne(c, callback) {
 }
 
 function getOneByName(c, callback) {
-  connect(function(comments, client) {
-    comments
+  connect(function(players, client) {
+    players
       .find({
         $or: [{ firstName: c }, { lastName: c }]
       })
       .toArray(function(err, docs) {
         if (err !== null) throw err;
-        //console.log("got " + docs.length + " comments");
+        //console.log("got " + docs.length + " players");
         callback(docs);
         client.close();
       });
@@ -79,15 +79,15 @@ function getOneByName(c, callback) {
 }
 
 function getOneByFullName(first, last, callback) {
-  connect(function(comments, client) {
-    comments
+  connect(function(players, client) {
+    players
       .find({
         firstName: first,
         lastName: last
       })
       .toArray(function(err, docs) {
         if (err !== null) throw err;
-        //console.log("got " + docs.length + " comments");
+        //console.log("got " + docs.length + " players");
         callback(docs);
         client.close();
       });
@@ -95,14 +95,14 @@ function getOneByFullName(first, last, callback) {
 }
 
 function getTopTen(num, querry, callback) {
-  connect(function(comments, client) {
-    comments
+  connect(function(players, client) {
+    players
       .find()
       .sort(querry)
       .limit(num)
       .toArray(function(err, docs) {
         if (err !== null) throw err;
-        console.log("got " + docs.length + " comments");
+        console.log("got " + docs.length + " players");
         callback(docs);
         client.close();
       });
@@ -112,9 +112,9 @@ function getTopTen(num, querry, callback) {
 // querry database to increnment given player votes
 function upVote(c, callback) {
   console.log("player ID   " + c);
-  connect(function(comments, client) {
-    comments.updateOne({ personId: c }, { $inc: { votes: 1 } });
-    comments.find({ personId: c }).toArray(function(err, docs) {
+  connect(function(players, client) {
+    players.updateOne({ personId: c }, { $inc: { votes: 1 } });
+    players.find({ personId: c }).toArray(function(err, docs) {
       if (err !== null) throw err;
       //console.log("upvoted >>>>>>> " + docs);
       callback(docs);
@@ -126,9 +126,9 @@ function upVote(c, callback) {
 // querry database to decrement given player votes
 function downVote(c, callback) {
   console.log("player ID   " + c);
-  connect(function(comments, client) {
-    comments.updateOne({ personId: c }, { $inc: { votes: -1 } });
-    comments.find({ personId: c }).toArray(function(err, docs) {
+  connect(function(players, client) {
+    players.updateOne({ personId: c }, { $inc: { votes: -1 } });
+    players.find({ personId: c }).toArray(function(err, docs) {
       if (err !== null) throw err;
       //console.log("upvoted >>>>>>> " + docs);
       callback(docs);
