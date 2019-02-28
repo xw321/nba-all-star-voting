@@ -97,7 +97,7 @@ function getOneByFullName(first, last, callback) {
   });
 }
 
-function getTopTen(num, querry, callback) {
+function getPlayersSortBy(num, querry, callback) {
   connect(function(players, client) {
     players
       .find()
@@ -163,29 +163,29 @@ router.get("/getMessages", function(req, res, next) {
   });
 });
 
-router.get("/getPlayer/:personId", function(req, res, next) {
+router.get("/getPlayerById/:personId", function(req, res, next) {
   console.log("get one id" + req.params.personId);
   getOne(req.params.personId, function(docs) {
     res.send(docs);
   });
 });
 
-router.get("/getPlayerByName/:name", function(req, res, next) {
+router.get("/getPlayerByQuerryName/:name", function(req, res, next) {
   let fullName = req.params.name.trim();
 
   if (fullName === "mostvotes") {
     let sortQuerry = { votes: -1 };
-    getTopTen(100, sortQuerry, function(docs) {
+    getPlayersSortBy(100, sortQuerry, function(docs) {
       res.send(docs);
     });
   } else if (fullName === "leastvotes") {
     let sortQuerry = { votes: 1 };
-    getTopTen(100, sortQuerry, function(docs) {
+    getPlayersSortBy(100, sortQuerry, function(docs) {
       res.send(docs);
     });
   } else if (fullName === "pos") {
     let sortQuerry = { pos: 1 };
-    getTopTen(100, sortQuerry, function(docs) {
+    getPlayersSortBy(100, sortQuerry, function(docs) {
       res.send(docs);
     });
   } else if (fullName === "name") {
@@ -194,7 +194,7 @@ router.get("/getPlayerByName/:name", function(req, res, next) {
     });
   } else if (fullName === "age") {
     let sortQuerry = { dateOfBirthUTC: 1 };
-    getTopTen(100, sortQuerry, function(docs) {
+    getPlayersSortBy(100, sortQuerry, function(docs) {
       res.send(docs);
     });
   } else {
@@ -218,7 +218,7 @@ router.get("/getPlayerByName/:name", function(req, res, next) {
 
 router.get("/topten", function(req, res, next) {
   console.log("top ten!!!!");
-  getTopTen(10, { votes: -1 }, function(docs) {
+  getPlayersSortBy(10, { votes: -1 }, function(docs) {
     res.send(docs);
   });
 });

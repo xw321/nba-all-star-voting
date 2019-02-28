@@ -1,55 +1,51 @@
-h1{
-	font-family: "Balto",sans-serif;
-	font-weight:900;
-	font-size:2.5em;
-	margin: 5px 200px;
-
+h1 {
+  font-family: "Balto", sans-serif;
+  font-weight: 900;
+  font-size: 2.5em;
+  margin: 30px 200px;
 }
 
-.frontText{
-	font-family: sans-serif;
-	color: dimgrey;
-	font-size:1.2em;
-	margin: 5px 180px;
+.frontText {
+  font-family: sans-serif;
+  color: dimgrey;
+  font-size: 1.2em;
+  margin: 20px 180px;
 }
 
-.frontText2{
-	font-family: sans-serif;
-	color: dimgrey;
-	font-size:1em;
-	margin: 10px 480px;
+.frontText2 {
+  font-family: sans-serif;
+  color: dimgrey;
+  font-size: 1em;
+  margin: 30px 480px;
 }
 
 .navbar {
-	background-color: black;
-	color: black;
-
+  background-color: black;
+  color: black;
 }
 
-.Comment{
+.Comment {
+  font-size: 0.9em;
 
-    font-size:0.9em;
-    
-    border-radius: 30%;
-    
-    height: 140px;
-    
-    
-    margin: 5px 1px;
-    text-align: center; 
-    padding: 5px;
-    border: 1px solid rgba(0,0,0,0.2);
-    
-    
-    border: 2px solid rgba(0,0,0,0.2);
-    background-color: red;
-    border-style: double;
+  border-radius: 5%;
 
+  height: 160px;
+  width: 100%;
+
+  margin: 5px 1px;
+  text-align: center;
+  padding: 5px;
 }
 
-.back{
-	
-	
-	z-index:999;
-	color: black;
+.back {
+  z-index: 999;
+  color: black;
+}
+.hometitle {
+  font-family: Anton;
+  font-size: 48px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 500;
+  line-height: 26.4px;
 }

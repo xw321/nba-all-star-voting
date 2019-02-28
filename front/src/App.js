@@ -42,7 +42,10 @@ class App extends Component {
     name = name.trim();
     let pattern = /^[a-zA-Z\s]+$/;
     if (!name.match(pattern)) {
-      alert("Invald name");
+      this.myInputText.value = "";
+      alert(
+        "Yo dawg, stop playin' alright? I work my ass off to put up this website, don't waste my effort to satisfy you lil childish sick trick. Now get you sh*t together and give me a real name!"
+      );
     } else {
       name = name.replace(/\s+/g, " ");
       console.log(name);
@@ -58,7 +61,7 @@ class App extends Component {
   }
 
   searchByName(firstName, lastName) {
-    fetch("/api/getPlayerByName/" + firstName + " " + lastName)
+    fetch("/api/getPlayerByQuerryName/" + firstName + " " + lastName)
       .then(res => res.json())
       .then(data => {
         console.log("got one! data from search   " + data.length);
@@ -85,7 +88,7 @@ class App extends Component {
   }
 
   handleChange(event) {
-    console.log("select queery is :   " + event.target.value);
+    console.log("select querry is :   " + event.target.value);
     let sortBy = event.target.value;
     //this.setState({ value: event.target.value });
     //alert("Your favorite flavor is: " + this.state.value);
@@ -103,7 +106,7 @@ class App extends Component {
           <br />
           <div className="row d-flex justify-content-around">
             <form
-              className="form-inline form-group border rounded"
+              className="form-inline form-group border-rounded"
               onSubmit={this.validateName.bind(this)}
             >
               <div>
@@ -119,7 +122,7 @@ class App extends Component {
                 </label>
               </div>
               <input
-                className="btn btn-secondary bg-secondary text-light border rounded"
+                className="btn btn-secondary bg-secondary text-light border-rounded form-inline form-group"
                 type="submit"
                 value="Search"
               />

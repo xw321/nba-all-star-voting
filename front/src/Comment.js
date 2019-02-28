@@ -1,6 +1,16 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
+let teamFile = require("./team.json");
+let teamMap = new Map();
+
+let i = 0;
+while (i < 30) {
+  teamMap.set(teamFile[i].teamId.toString(), teamFile[i].teamName);
+  i++;
+  //console.log("create map" + i);
+}
+
 export default class Comment extends Component {
   constructor(props) {
     super(props);
@@ -21,10 +31,9 @@ export default class Comment extends Component {
 
   // reload data when state change (i.e., player votes change)
   reloadData() {
-    fetch("/api/getPlayer/" + this.props.comment.personId)
+    fetch("/api/getPlayerById/" + this.props.comment.personId)
       .then(res => res.json())
       .then(data => {
-        console.log("player Vote is    " + data[0].votes);
         this.setState({
           votes: data[0].votes
         });
@@ -35,7 +44,6 @@ export default class Comment extends Component {
   // after getting response, reload
   onClick() {
     // Post
-    console.log("Send the upvote post");
     fetch("/api/upvote", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       headers: {
@@ -45,7 +53,7 @@ export default class Comment extends Component {
     })
       .then(response => response.json())
       .then(result => {
-        console.log("UPVOTE player return result!!" + JSON.stringify(result));
+        console.log("UPVOTE player return result!!" + result);
         this.reloadData();
       });
   }
@@ -54,7 +62,6 @@ export default class Comment extends Component {
   // after getting response, reload
   downClick() {
     // Post
-    console.log("Send the upvote post");
     fetch("/api/downvote", {
       method: "POST", // *GET, POST, PUT, DELETE, etc.
       headers: {
@@ -64,7 +71,7 @@ export default class Comment extends Component {
     })
       .then(response => response.json())
       .then(result => {
-        console.log("UPVOTE player return result!!" + JSON.stringify(result));
+        console.log("UPVOTE player return result!!" + result);
         this.reloadData();
       });
   }
@@ -82,20 +89,13 @@ export default class Comment extends Component {
   }
 
   getTeam() {
-    let teamFile = require("./team.json");
     let myTeamId = this.props.comment.teamId;
-    let i = 0;
-    while (teamFile[i].teamId.toString() !== myTeamId) {
-      i++;
-    }
-    if (i !== teamFile.length) {
-      return teamFile[i].teamName;
-    }
-    return "no such team";
+    return teamMap.get(myTeamId);
   }
+
   render() {
     return (
-      <div className="Comment col-3 bg-white">
+      <div className="Comment col-3 bg-light border border-secondary border-rounded">
         <span
           role="img"
           aria-label="player thumbnail"
@@ -103,7 +103,7 @@ export default class Comment extends Component {
         >
           👤 {this.props.comment.firstName}
         </span>
-        &nbsp;&nbsp;
+        &nbsp;
         <span className="font-weight-bold">{this.props.comment.lastName}</span>
         <br />
         <span>Age: {this.state.age}</span>
@@ -125,7 +125,23 @@ export default class Comment extends Component {
           </span>
         </button>
         &nbsp;&nbsp;
-        <span># of votes: {this.state.votes}</span>
+        <span>
+          # of votes:{" "}
+          <span className="font-weight-bold text-info">{this.state.votes}</span>
+        </span>
+        <br />
+        <a
+          className="text-info"
+          href={
+            "https://en.wikipedia.org/wiki/" +
+            this.props.comment.firstName +
+            "_" +
+            this.props.comment.lastName
+          }
+        >
+          {" "}
+          Learn More
+        </a>
       </div>
     );
   }
