@@ -49,3 +49,22 @@ h1 {
   font-weight: 500;
   line-height: 26.4px;
 }
+
+.subtitle {
+  font-family: Anton;
+  font-size: 36px;
+  font-style: lighter;
+  font-variant: small-caps;
+  font-weight: 500;
+  line-height: 26.4px;
+}
+
+.subtitle2 {
+  font-family: Anton;
+  font-size: 40px;
+  font-style: lighter;
+  font-variant: small-caps;
+  font-weight: 500;
+  line-height: 30px;
+  color: white;
+}
