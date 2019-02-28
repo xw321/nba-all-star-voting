@@ -6,7 +6,7 @@ Project 2 for Web Development course(CS5610) in Northeastern University, Silicon
 
 ## Demo
 
-[](demo.gif)
+![](https://raw.githubusercontent.com/xw321/nba-all-star-voting/master/demo.gif)
 
 
 
