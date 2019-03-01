@@ -96,24 +96,34 @@ export default class Comment extends Component {
   render() {
     return (
       <div className="Comment col-3 bg-light border border-secondary border-rounded">
-        <span
-          role="img"
-          aria-label="player thumbnail"
-          className="font-weight-bold"
-        >
-          👤 {this.props.comment.firstName}
-        </span>
-        &nbsp;
-        <span className="font-weight-bold">{this.props.comment.lastName}</span>
-        <br />
-        <span>Age: {this.state.age}</span>
-        <br />
-        <span>Position: {this.props.comment.pos}</span>
-        &nbsp;&nbsp;
-        <br />
-        <span>Team: {this.state.teamName}</span>
-        <br />
-        <button className="btn btn-info" onClick={this.onClick}>
+        <div>
+          <img
+            className="float-left mt-3 mr-3 ml-3"
+            src={
+              "https://ak-static.cms.nba.com/wp-content/uploads/headshots/nba/latest/260x190/" +
+              this.props.comment.personId +
+              ".png"
+            }
+            alt="plaer thumbnail"
+            height="57"
+            width="78"
+          />
+          <span className="font-weight-bold">
+            {this.props.comment.firstName}
+          </span>
+          &nbsp;
+          <span className="font-weight-bold">
+            {this.props.comment.lastName}
+          </span>
+          <br />
+          <span>Age: {this.state.age}</span>
+          <br />
+          <span>Position: {this.props.comment.pos}</span>
+          &nbsp;&nbsp;
+          <br />
+          <span>Team: {this.state.teamName}</span>
+        </div>
+        <button className="btn btn-info ml-3" onClick={this.onClick}>
           <span role="img" aria-label="upvote for this player">
             ✔
           </span>
@@ -131,7 +141,7 @@ export default class Comment extends Component {
         </span>
         <br />
         <a
-          className="text-info"
+          className="text-info d-flex justify-content-center"
           href={
             "https://en.wikipedia.org/wiki/" +
             this.props.comment.firstName +
